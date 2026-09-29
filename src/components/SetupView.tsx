@@ -23,6 +23,13 @@ export function SetupView({
 }: SetupViewProps) {
   const [presetName, setPresetName] = useState("");
   const [roundsDraft, setRoundsDraft] = useState(String(config.rounds));
+  const [presetsOpen, setPresetsOpen] = useState(presets.length === 0);
+
+  useEffect(() => {
+    if (presets.length === 0) {
+      setPresetsOpen(true);
+    }
+  }, [presets.length]);
 
   useEffect(() => {
     const parsed =
@@ -45,6 +52,7 @@ export function SetupView({
     if (name === "") return;
     onSavePreset(name, config);
     setPresetName("");
+    setPresetsOpen(true);
   };
 
   const changeRounds = (delta: number) => {
@@ -64,40 +72,58 @@ export function SetupView({
 
       <section className="card" aria-labelledby="presets-heading">
         <h2 className="card-title" id="presets-heading">
-          Presets
-        </h2>
-        <PresetList
-          presets={presets}
-          onLoad={(next) => onConfigChange({ ...next })}
-          onDelete={onDeletePreset}
-        />
-        <div className="preset-save">
-          <input
-            className="text-input"
-            type="text"
-            placeholder="Preset name"
-            maxLength={40}
-            value={presetName}
-            onChange={(e) => setPresetName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") save();
-            }}
-            aria-label="Preset name"
-          />
           <button
             type="button"
-            className="btn btn-secondary"
-            onClick={save}
-            disabled={presetName.trim() === ""}
+            className="card-toggle"
+            aria-expanded={presetsOpen}
+            aria-controls="presets-panel"
+            onClick={() => setPresetsOpen((open) => !open)}
           >
-            Save
+            <span className="card-title-text">Presets</span>
+            <svg
+              className={"chevron" + (presetsOpen ? " is-open" : "")}
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M3 6 L8 11 L13 6" />
+            </svg>
           </button>
+        </h2>
+        <div id="presets-panel" className="presets-panel" hidden={!presetsOpen}>
+          <PresetList
+            presets={presets}
+            onLoad={(next) => onConfigChange({ ...next })}
+            onDelete={onDeletePreset}
+          />
+          <div className="preset-save">
+            <input
+              className="text-input"
+              type="text"
+              placeholder="Preset name"
+              maxLength={40}
+              value={presetName}
+              onChange={(e) => setPresetName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") save();
+              }}
+              aria-label="Preset name"
+            />
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={save}
+              disabled={presetName.trim() === ""}
+            >
+              Save
+            </button>
+          </div>
         </div>
       </section>
 
       <section className="card" aria-labelledby="timer-heading">
         <h2 className="card-title" id="timer-heading">
-          Timer
+          <span className="card-title-text">Timer</span>
         </h2>
 
         <TimeInput
