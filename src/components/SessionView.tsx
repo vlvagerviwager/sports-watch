@@ -1,5 +1,6 @@
 import type { TimerApi } from "../hooks/useTimer";
 import { formatClock, formatDuration } from "../lib/time";
+import { LuchadorMask } from "./LuchadorMask";
 
 interface SessionViewProps {
   timer: TimerApi;
@@ -14,7 +15,10 @@ export function SessionView({ timer, onStop }: SessionViewProps) {
     return (
       <main className="session session-finished">
         <div className="session-center">
-          <p className="phase-label phase-end">Done</p>
+          <LuchadorMask className="finished-mask" size={76} />
+          <div className="phase-banner" data-phase="end">
+            <span className="phase-banner-inner">Done</span>
+          </div>
           <h2 className="finished-title">Session complete</h2>
           <p className="finished-stats">
             {config.rounds} rounds
@@ -70,7 +74,9 @@ export function SessionView({ timer, onStop }: SessionViewProps) {
           </div>
         </div>
 
-        <p className="phase-label">{phase === "work" ? "Work" : "Break"}</p>
+        <div className="phase-banner" data-phase={phase}>
+          <span className="phase-banner-inner">{phase === "work" ? "Work" : "Break"}</span>
+        </div>
 
         <div className="clock" aria-live="off">
           {formatClock(remainingSeconds)}

@@ -3,6 +3,7 @@ import type { Preset, TimerConfig } from "../types";
 import { clampInt, formatDuration, sessionTotalSeconds } from "../lib/time";
 import { TimeInput } from "./TimeInput";
 import { PresetList } from "./PresetList";
+import { LuchadorMask } from "./LuchadorMask";
 
 interface SetupViewProps {
   config: TimerConfig;
@@ -56,7 +57,11 @@ export function SetupView({
   return (
     <main className="setup">
       <header className="app-header">
+        <LuchadorMask className="header-mask" size={68} />
         <h1 className="app-title">Sports Watch</h1>
+        <div className="rope-divider" aria-hidden="true">
+          <span />
+        </div>
         <p className="app-tagline">Workout. Break. Repeat.</p>
       </header>
 
