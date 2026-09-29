@@ -40,8 +40,8 @@ interface Engine {
 }
 
 const DEFAULT_CONFIG: TimerConfig = {
-  workoutSeconds: 60,
-  breakSeconds: 30,
+  workoutSeconds: 0,
+  breakSeconds: 0,
   rounds: 5,
 };
 

@@ -10,8 +10,8 @@ import { SessionView } from "./components/SessionView";
 type View = "setup" | "session";
 
 const INITIAL_CONFIG: TimerConfig = {
-  workoutSeconds: 45,
-  breakSeconds: 15,
+  workoutSeconds: 0,
+  breakSeconds: 0,
   rounds: 4,
 };
 
