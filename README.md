@@ -39,7 +39,7 @@ bun run typecheck
 - Presets persist in localStorage, no account or backend
 - Wake Lock keeps the screen on while a session is running (where supported)
 - Timestamp based countdown, so a throttled background tab still lands on the right phase
-- Fully responsive, works from 320px up, tuned for one handed phone use
+- Fully responsive, works from 320px up, optimised for phone use
 
 ## Tech stack
 

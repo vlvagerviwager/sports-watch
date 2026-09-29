@@ -91,6 +91,16 @@ export function advance(engine: Engine, now: number, out: FlashKind[]): void {
   }
 }
 
+function displaySignature(engine: Engine, now: number): string {
+  const remaining =
+    engine.deadline !== null ? Math.max(0, engine.deadline - now) : engine.remainingMs;
+  const bucket =
+    engine.totalMs > 0
+      ? Math.min(200, Math.max(0, Math.round((1 - remaining / engine.totalMs) * 200)))
+      : 0;
+  return `${engine.status}|${engine.phase}|${engine.round}|${Math.ceil(remaining / 1000)}|${bucket}`;
+}
+
 export function useTimer(): TimerApi {
   const engineRef = useRef<Engine | null>(null);
   if (engineRef.current === null) engineRef.current = createEngine(DEFAULT_CONFIG);
@@ -101,6 +111,8 @@ export function useTimer(): TimerApi {
   const render = useCallback(() => {
     setVersion((v) => v + 1);
   }, []);
+
+  const signatureRef = useRef("");
 
   const announce = useCallback((kinds: FlashKind[]) => {
     if (kinds.length === 0) return;
@@ -122,14 +134,16 @@ export function useTimer(): TimerApi {
     const engine = engineRef.current;
     if (!engine || engine.status !== "running" || engine.deadline === null) return;
     const now = Date.now();
-    if (now < engine.deadline) {
-      render();
-      return;
+    if (now >= engine.deadline) {
+      const kinds: FlashKind[] = [];
+      advance(engine, now, kinds);
+      announce(kinds);
     }
-    const kinds: FlashKind[] = [];
-    advance(engine, now, kinds);
-    announce(kinds);
-    render();
+    const signature = displaySignature(engine, now);
+    if (signature !== signatureRef.current) {
+      signatureRef.current = signature;
+      render();
+    }
   }, [announce, render]);
 
   const status = engineRef.current.status;

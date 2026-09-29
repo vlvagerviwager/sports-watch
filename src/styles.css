@@ -592,6 +592,7 @@ input {
 
 .phase-banner {
   display: inline-block;
+  min-width: 180px;
   padding: 3px;
   clip-path: polygon(
     16px 0,
