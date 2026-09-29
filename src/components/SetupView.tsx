@@ -227,6 +227,17 @@ export function SetupView({
           Start workout
         </button>
       </section>
+
+      <footer className="app-footer">
+        <a
+          className="footer-link"
+          href="https://github.com/vlvagerviwager/sports-watch"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+      </footer>
     </main>
   );
 }

@@ -801,7 +801,34 @@ input {
 
 @media (min-width: 600px) {
   .setup,
-  .session {
+.app-footer {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 0;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap);
+  padding: 0 16px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+  color: var(--gold-light);
+  border-color: var(--border);
+}
+
+.session {
     padding-top: 36px;
   }
 
