@@ -62,7 +62,6 @@ export function SetupView({
         <div className="rope-divider" aria-hidden="true">
           <span />
         </div>
-        <p className="app-tagline">Workout. Break. Repeat.</p>
       </header>
 
       <section className="card" aria-labelledby="presets-heading">
