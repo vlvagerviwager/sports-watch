@@ -36,7 +36,7 @@ bun run typecheck
 - Phase alerts: sound (Web Audio API), vibration, and a full screen color flash (green for work, amber for break, pink for the finish)
 - Round progress dots, phase progress bar, and a hint of what comes next
 - Save the current setup as a preset, load a preset with one tap, delete presets you no longer need
-- Presets persist in localStorage, no account or backend
+- Presets persist in localStorage, no account required
 - Wake Lock keeps the screen on while a session is running (where supported)
 - Timestamp based countdown, so a throttled background tab still lands on the right phase
 - Fully responsive, works from 320px up, optimised for phone use
@@ -49,6 +49,21 @@ bun run typecheck
 - [Vite 7](https://vite.dev) dev server and bundler
 - Plain CSS, no UI framework
 - Browser APIs: localStorage, Web Audio API, Vibration API, Wake Lock API
+
+## Testing
+
+Tests follow the [testing trophy](https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications) approach: a strong static base, the widest band of unit and integration tests in the middle, and a deliberately thin top.
+
+| Layer | Coverage | Command |
+| --- | --- | --- |
+| Static | TypeScript compiler over app and tests | `bun run typecheck` |
+| Unit | Time helpers, timer engine phase transitions, preset storage validation | `bun test` |
+| Integration | Setup form, presets (save, collapse, highlight, delete), and the full workout workflow rendered in a happy DOM | `bun test` |
+| End to end | Kept thin on purpose: the deploy workflow runs typecheck, tests, and a production build on every push to `main` | automatic |
+
+```bash
+bun test
+```
 
 ## Deploy to GitHub Pages
 
