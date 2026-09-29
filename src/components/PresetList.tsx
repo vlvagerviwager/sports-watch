@@ -1,13 +1,14 @@
-import type { Preset, TimerConfig } from "../types";
+import type { Preset } from "../types";
 import { formatDuration } from "../lib/time";
 
 interface PresetListProps {
   presets: Preset[];
-  onLoad: (config: TimerConfig) => void;
+  selectedId: string | null;
+  onLoad: (preset: Preset) => void;
   onDelete: (id: string) => void;
 }
 
-export function PresetList({ presets, onLoad, onDelete }: PresetListProps) {
+export function PresetList({ presets, selectedId, onLoad, onDelete }: PresetListProps) {
   if (presets.length === 0) {
     return <p className="muted small">No presets yet. Save the current setup to reuse it later.</p>;
   }
@@ -18,8 +19,9 @@ export function PresetList({ presets, onLoad, onDelete }: PresetListProps) {
         <li className="preset-row" key={preset.id}>
           <button
             type="button"
-            className="preset-load"
-            onClick={() => onLoad(preset.config)}
+            className={"preset-load" + (preset.id === selectedId ? " is-selected" : "")}
+            aria-pressed={preset.id === selectedId}
+            onClick={() => onLoad(preset)}
           >
             <span className="preset-name">{preset.name}</span>
             <span className="preset-meta">

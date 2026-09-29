@@ -13,6 +13,14 @@ interface SetupViewProps {
   onStart: () => void;
 }
 
+function configsEqual(a: TimerConfig, b: TimerConfig): boolean {
+  return (
+    a.workoutSeconds === b.workoutSeconds &&
+    a.breakSeconds === b.breakSeconds &&
+    a.rounds === b.rounds
+  );
+}
+
 export function SetupView({
   config,
   onConfigChange,
@@ -24,12 +32,33 @@ export function SetupView({
   const [presetName, setPresetName] = useState("");
   const [roundsDraft, setRoundsDraft] = useState(String(config.rounds));
   const [presetsOpen, setPresetsOpen] = useState(presets.length === 0);
+  const [selectedPresetId, setSelectedPresetId] = useState<string | null>(null);
 
   useEffect(() => {
     if (presets.length === 0) {
       setPresetsOpen(true);
     }
   }, [presets.length]);
+
+  useEffect(() => {
+    if (selectedPresetId === null) return;
+    const preset = presets.find((p) => p.id === selectedPresetId);
+    if (!preset || !configsEqual(preset.config, config)) {
+      setSelectedPresetId(null);
+    }
+  }, [config, presets, selectedPresetId]);
+
+  const handleLoadPreset = (preset: Preset) => {
+    onConfigChange({ ...preset.config });
+    setSelectedPresetId(preset.id);
+  };
+
+  const handleDeletePreset = (id: string) => {
+    onDeletePreset(id);
+    if (selectedPresetId === id) {
+      setSelectedPresetId(null);
+    }
+  };
 
   useEffect(() => {
     const parsed =
@@ -93,8 +122,9 @@ export function SetupView({
         <div id="presets-panel" className="presets-panel" hidden={!presetsOpen}>
           <PresetList
             presets={presets}
-            onLoad={(next) => onConfigChange({ ...next })}
-            onDelete={onDeletePreset}
+            selectedId={selectedPresetId}
+            onLoad={handleLoadPreset}
+            onDelete={handleDeletePreset}
           />
           <div className="preset-save">
             <input
