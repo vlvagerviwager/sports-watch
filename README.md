@@ -67,3 +67,7 @@ Troubleshooting:
 
 - **Blank page, console error about `/src/main.tsx` and a disallowed MIME type**: GitHub Pages is serving the repository source instead of the production build. This means Source is set to "Deploy from a branch". Set it to **GitHub Actions** as described above, then re run the workflow (Actions tab > Deploy to GitHub Pages > Run workflow).
 - **Workflow fails with "Ensure GitHub Pages has been enabled"**: same cause as above. The build job succeeds, only the deployment step needs the Source setting above.
+
+## Credits
+
+- Trashcan icon by Cédric Villain from the Noun Project (icon 888071).

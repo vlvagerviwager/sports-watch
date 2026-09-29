@@ -425,8 +425,27 @@ input {
   background: #140d10;
   border: 1.5px solid var(--border);
   color: var(--gold);
-  font-size: 1.4rem;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trash-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.trash-icon rect,
+.trash-icon path {
+  fill: currentColor;
+}
+
+.trash-icon .trash-body {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 17;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .preset-delete:hover {
