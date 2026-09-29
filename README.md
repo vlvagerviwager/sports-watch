@@ -62,3 +62,8 @@ One time setup:
 4. Push to `main` (or run the workflow manually from the Actions tab).
 
 The site is served with a relative base path (`base: "./"` in `vite.config.ts`), so it works at any repository sub path.
+
+Troubleshooting:
+
+- **Blank page, console error about `/src/main.tsx` and a disallowed MIME type**: GitHub Pages is serving the repository source instead of the production build. This means Source is set to "Deploy from a branch". Set it to **GitHub Actions** as described above, then re run the workflow (Actions tab > Deploy to GitHub Pages > Run workflow).
+- **Workflow fails with "Ensure GitHub Pages has been enabled"**: same cause as above. The build job succeeds, only the deployment step needs the Source setting above.
