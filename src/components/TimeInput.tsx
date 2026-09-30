@@ -46,6 +46,12 @@ export function TimeInput({ label, seconds, onChange }: TimeInputProps) {
     onChange(draftToSeconds(next));
   };
 
+  const clearForTyping = (index: 0 | 1 | 2) => {
+    const cleared: Draft = [...draft];
+    cleared[index] = "";
+    setDraft(cleared);
+  };
+
   const parts: Array<{ index: 0 | 1 | 2; unit: string }> = [
     { index: 0, unit: "h" },
     { index: 1, unit: "m" },
@@ -70,7 +76,8 @@ export function TimeInput({ label, seconds, onChange }: TimeInputProps) {
               aria-label={`${label} in ${unit === "h" ? "hours" : unit === "m" ? "minutes" : "seconds"}`}
               value={draft[index]}
               onChange={(event) => update(index, event.target.value)}
-              onBlur={() => setDraft(draftFromSeconds(draftToSeconds(draftRef.current)))}
+              onFocus={() => clearForTyping(index)}
+              onBlur={() => setDraft(draftFromSeconds(seconds))}
             />
             <span className="time-unit">{unit}</span>
             {partIndex < parts.length - 1 && (

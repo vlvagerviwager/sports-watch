@@ -49,6 +49,7 @@ Troubleshooting:
 
 - Workout timer with hh:mm:ss input
 - Break timer with hh:mm:ss input
+- Time fields empty when tapped, so you can type a fresh value without erasing the old one
 - Configurable number of rounds (1 to 99)
 - Auto cycling session: workout, break, workout, and so on, ending after the final round
 - Pause, resume, skip phase, and stop controls during a session
