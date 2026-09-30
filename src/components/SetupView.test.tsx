@@ -42,12 +42,16 @@ const savedPreset: Preset = {
   createdAt: 0,
 };
 
+function inputValue(labelName: string): string {
+  return (screen.getByLabelText(labelName) as HTMLInputElement).value;
+}
+
 test("shows zeroed timers, four rounds, and the repo link by default", () => {
   render(<Harness />);
-  expect(screen.getByLabelText("Workout in hours").getAttribute("value")).toBe("0");
-  expect(screen.getByLabelText("Workout in minutes").getAttribute("value")).toBe("0");
-  expect(screen.getByLabelText("Workout in seconds").getAttribute("value")).toBe("0");
-  expect(screen.getByLabelText("Number of rounds").getAttribute("value")).toBe("4");
+  expect(inputValue("Workout in hours")).toBe("0");
+  expect(inputValue("Workout in minutes")).toBe("0");
+  expect(inputValue("Workout in seconds")).toBe("0");
+  expect(inputValue("Number of rounds")).toBe("4");
   expect(screen.getByText(/Total session:/, { selector: "p.total-line" })).toBeTruthy();
   expect(screen.getByText("0 s", { selector: "strong" })).toBeTruthy();
 
@@ -57,13 +61,12 @@ test("shows zeroed timers, four rounds, and the repo link by default", () => {
 
 test("rounds stepper increments and decrements", () => {
   render(<Harness />);
-  const rounds = screen.getByLabelText("Number of rounds");
 
   fireEvent.click(screen.getByRole("button", { name: "Increase rounds" }));
-  expect(rounds.getAttribute("value")).toBe("5");
+  expect(inputValue("Number of rounds")).toBe("5");
 
   fireEvent.click(screen.getByRole("button", { name: "Decrease rounds" }));
-  expect(rounds.getAttribute("value")).toBe("4");
+  expect(inputValue("Number of rounds")).toBe("4");
 });
 
 test("start stays disabled until the workout has a duration", () => {
@@ -109,9 +112,9 @@ test("loads a preset, highlights it, and deselects on edit", () => {
   fireEvent.click(loadButton);
 
   expect(loadButton.getAttribute("aria-pressed")).toBe("true");
-  expect(screen.getByLabelText("Workout in minutes").getAttribute("value")).toBe("1");
-  expect(screen.getByLabelText("Break in seconds").getAttribute("value")).toBe("30");
-  expect(screen.getByLabelText("Number of rounds").getAttribute("value")).toBe("5");
+  expect(inputValue("Workout in minutes")).toBe("1");
+  expect(inputValue("Break in seconds")).toBe("30");
+  expect(inputValue("Number of rounds")).toBe("5");
 
   fireEvent.change(screen.getByLabelText("Workout in seconds"), { target: { value: "10" } });
   expect(loadButton.getAttribute("aria-pressed")).toBe("false");
