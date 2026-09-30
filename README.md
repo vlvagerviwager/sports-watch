@@ -2,6 +2,8 @@
 
 A minimal, mobile friendly interval timer for gym workouts. Set a workout time, a break time, and a number of rounds, then let it auto cycle: work, break, work, break, until you are done. Save the setup as a preset so the next session is one tap away.
 
+![Sports Watch screenshot](./screenshot.png)
+
 ## Run locally
 
 Requires [Bun](https://bun.sh).
