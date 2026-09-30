@@ -10,8 +10,8 @@ export function LuchadorMask({ size = 68, className }: LuchadorMaskProps) {
       width={size}
       height={Math.round(size * 1.2)}
       viewBox="0 0 200 240"
-      role="img"
-      aria-label="Luchador mask"
+      aria-hidden="true"
+      focusable="false"
     >
       <path
         d="M100 8 C152 8 184 50 184 104 C184 174 146 232 100 232 C54 232 16 174 16 104 C16 50 48 8 100 8 Z"
