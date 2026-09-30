@@ -80,7 +80,7 @@ export function SessionView({ timer, onStop }: SessionViewProps) {
         </div>
 
         <div className="phase-banner" data-phase={phase} aria-live="polite">
-          <span className="phase-banner-inner">{phase === "work" ? "Work" : "Break"}</span>
+            <span className="phase-banner-inner">{phase === "work" ? "Workout" : "Break"}</span>
         </div>
 
         <div className="clock" aria-live="off">

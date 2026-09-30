@@ -20,7 +20,7 @@ test("runs the full workout workflow from setup to stop", () => {
 
   startWorkout();
   expect(screen.getByText("Round 1 / 4")).toBeTruthy();
-  expect(screen.getByText("Work")).toBeTruthy();
+  expect(screen.getByText("Workout")).toBeTruthy();
   expect(screen.getByRole("button", { name: "Pause" })).toBeTruthy();
 
   fireEvent.click(screen.getByRole("button", { name: "Pause" }));
@@ -35,7 +35,7 @@ test("runs the full workout workflow from setup to stop", () => {
   expect(screen.getByText("Round 1 / 4")).toBeTruthy();
 
   fireEvent.click(screen.getByRole("button", { name: "Skip" }));
-  expect(screen.getByText("Work")).toBeTruthy();
+  expect(screen.getByText("Workout")).toBeTruthy();
   expect(screen.getByText("Round 2 / 4")).toBeTruthy();
 
   fireEvent.click(screen.getByRole("button", { name: "Stop" }));
