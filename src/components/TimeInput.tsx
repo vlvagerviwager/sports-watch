@@ -51,14 +51,18 @@ export function TimeInput({ label, seconds, onChange }: TimeInputProps) {
     { index: 1, unit: "m" },
     { index: 2, unit: "s" },
   ];
+  const fieldId = label.toLowerCase().replace(/\s+/g, "-");
 
   return (
     <div className="field">
-      <span className="field-label">{label}</span>
+      <label className="field-label" htmlFor={`${fieldId}-h`}>
+        {label}
+      </label>
       <div className="time-group">
         {parts.map(({ index, unit }, partIndex) => (
           <div className="time-part" key={unit}>
             <input
+              id={`${fieldId}-${unit}`}
               className="time-input"
               type="text"
               inputMode="numeric"

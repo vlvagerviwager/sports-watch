@@ -169,9 +169,9 @@ export function SetupView({
         />
 
         <div className="field">
-          <span className="field-label" id="rounds-label">
+          <label className="field-label" id="rounds-label" htmlFor="rounds-input">
             Rounds
-          </span>
+          </label>
           <div className="stepper" role="group" aria-labelledby="rounds-label">
             <button
               type="button"
@@ -183,6 +183,7 @@ export function SetupView({
               −
             </button>
             <input
+              id="rounds-input"
               className="rounds-input"
               type="text"
               inputMode="numeric"
