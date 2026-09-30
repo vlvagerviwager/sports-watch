@@ -131,7 +131,8 @@ export function useTimer(): TimerApi {
         vibratePhase(kind);
       }
     }
-    const last = kinds[kinds.length - 1];
+    const last = kinds.at(-1);
+    if (last === undefined) return;
     flashKeyRef.current += 1;
     setFlash({ kind: last, key: flashKeyRef.current });
   }, []);

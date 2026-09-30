@@ -18,8 +18,8 @@ describe("usePresets", () => {
     act(() => result.current.savePreset("Leg day", config));
 
     expect(result.current.presets).toHaveLength(1);
-    expect(result.current.presets[0].name).toBe("Leg day");
-    expect(result.current.presets[0].config).toEqual(config);
+    expect(result.current.presets[0]?.name).toBe("Leg day");
+    expect(result.current.presets[0]?.config).toEqual(config);
 
     const stored: unknown = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? "[]");
     expect(Array.isArray(stored)).toBe(true);
@@ -37,9 +37,10 @@ describe("usePresets", () => {
   test("deletes a preset from state and localStorage", () => {
     const { result } = renderHook(() => usePresets());
     act(() => result.current.savePreset("Leg day", config));
-    const id = result.current.presets[0].id;
+    const savedPreset = result.current.presets[0];
+    if (!savedPreset) throw new Error("expected the saved preset");
 
-    act(() => result.current.deletePreset(id));
+    act(() => result.current.deletePreset(savedPreset.id));
 
     expect(result.current.presets).toHaveLength(0);
     expect(window.localStorage.getItem(STORAGE_KEY)).toBe("[]");
@@ -54,7 +55,7 @@ describe("usePresets", () => {
     const { result } = renderHook(() => usePresets());
 
     expect(result.current.presets).toHaveLength(1);
-    expect(result.current.presets[0].name).toBe("ok");
+    expect(result.current.presets[0]?.name).toBe("ok");
   });
 
   test("returns an empty list when storage holds invalid JSON", () => {
