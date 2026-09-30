@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
+import { act, renderHook } from "@testing-library/react";
 import type { TimerConfig } from "../types";
-import { advance, createEngine, type FlashKind } from "./useTimer";
+import { advance, createEngine, useTimer, type FlashKind } from "./useTimer";
 
 function runningEngine(config: TimerConfig, deadline: number) {
   const engine = createEngine(config);
@@ -96,5 +97,28 @@ describe("advance", () => {
     expect(engine.phase).toBe("work");
     expect(engine.deadline).toBe(5000);
     expect(out).toEqual([]);
+  });
+});
+
+describe("useTimer controls", () => {
+  test("skip advances phases while paused and stays paused", () => {
+    const { result } = renderHook(() => useTimer());
+
+    act(() => result.current.start({ workoutSeconds: 10, breakSeconds: 5, rounds: 3 }));
+    expect(result.current.snapshot.status).toBe("running");
+
+    act(() => result.current.pause());
+    expect(result.current.snapshot.status).toBe("paused");
+
+    act(() => result.current.skip());
+    expect(result.current.snapshot.status).toBe("paused");
+    expect(result.current.snapshot.phase).toBe("break");
+    expect(result.current.snapshot.remainingMs).toBe(5000);
+
+    act(() => result.current.skip());
+    expect(result.current.snapshot.status).toBe("paused");
+    expect(result.current.snapshot.phase).toBe("work");
+    expect(result.current.snapshot.round).toBe(2);
+    expect(result.current.snapshot.remainingMs).toBe(10000);
   });
 });

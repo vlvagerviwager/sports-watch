@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "bun:test";
 import { act, renderHook } from "@testing-library/react";
-import { usePresets } from "./usePresets";
+import { MAX_PRESET_NAME_LENGTH, MAX_PRESETS, usePresets } from "./usePresets";
 import type { TimerConfig } from "../types";
 
 const STORAGE_KEY = "sports-watch/presets/v1";
@@ -63,5 +63,27 @@ describe("usePresets", () => {
     const { result } = renderHook(() => usePresets());
 
     expect(result.current.presets).toHaveLength(0);
+  });
+
+  test("caps stored preset names at the maximum length", () => {
+    const { result } = renderHook(() => usePresets());
+
+    act(() => result.current.savePreset("x".repeat(60), config));
+
+    expect(result.current.presets[0]?.name).toHaveLength(MAX_PRESET_NAME_LENGTH);
+  });
+
+  test("keeps only the newest presets when the list is full", () => {
+    const { result } = renderHook(() => usePresets());
+
+    for (let presetNumber = 0; presetNumber <= MAX_PRESETS; presetNumber += 1) {
+      act(() => result.current.savePreset(`Preset ${presetNumber}`, config));
+    }
+
+    expect(result.current.presets).toHaveLength(MAX_PRESETS);
+    expect(result.current.presets.some((preset) => preset.name === "Preset 0")).toBe(false);
+    expect(
+      result.current.presets.some((preset) => preset.name === `Preset ${MAX_PRESETS}`),
+    ).toBe(true);
   });
 });
