@@ -60,6 +60,7 @@ Troubleshooting:
 - Wake Lock keeps the screen on while a session is running (where supported)
 - Timestamp based countdown, so a throttled background tab still lands on the right phase
 - Fully responsive, works from 320px up, optimised for phone use
+- Footer link to the source repository on GitHub
 
 ## Tech stack
 
