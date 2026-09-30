@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { TimerConfig } from "./types";
-import { useTimer } from "./hooks/useTimer";
+import { DEFAULT_CONFIG, useTimer } from "./hooks/useTimer";
 import { usePresets } from "./hooks/usePresets";
 import { useWakeLock } from "./hooks/useWakeLock";
 import { unlockAudio } from "./lib/alerts";
@@ -9,11 +9,7 @@ import { SessionView } from "./components/SessionView";
 
 type View = "setup" | "session";
 
-const INITIAL_CONFIG: TimerConfig = {
-  workoutSeconds: 0,
-  breakSeconds: 0,
-  rounds: 4,
-};
+const INITIAL_CONFIG: TimerConfig = { ...DEFAULT_CONFIG };
 
 export default function App() {
   const [config, setConfig] = useState<TimerConfig>(INITIAL_CONFIG);

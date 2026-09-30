@@ -39,10 +39,10 @@ interface Engine {
   config: TimerConfig;
 }
 
-const DEFAULT_CONFIG: TimerConfig = {
+export const DEFAULT_CONFIG: TimerConfig = {
   workoutSeconds: 0,
   breakSeconds: 0,
-  rounds: 5,
+  rounds: 4,
 };
 
 const MAX_ADVANCE_STEPS = 10000;
