@@ -8,7 +8,7 @@ Rules for anyone (AI agent or human) changing this repository. They come from de
 - **Conventional commits only**: `feat:`, `fix:`, `perf:`, `test:`, `docs:`, `chore:`, `refactor:`, `style:`. One logical change per commit. Never bundle unrelated changes together.
 - **Do not commit or push unless explicitly asked.** The user tests locally first and reviews each change. When asked to prepare something for review, leave it uncommitted.
 - **No emoji** in the codebase or messages.
-- **No magic numbers and no single letter variable names.** Extract constants with descriptive names, and give every variable a descriptive name. One letter names like `x`, `i`, or `n` are not allowed.
+- **No magic numbers and no single letter variable names.** Extract constants with descriptive names, and give every variable a descriptive name. One letter names like `x`, `i`, or `n` are not allowed. Scope: this applies to TypeScript and test code. Literal values in CSS (layout sizes, transitions, clip paths) are fine as long as colors stay in variables. Parameters named with a leading underscore plus a word (for example `_unused`) are allowed when the value is intentionally ignored.
 - **Update the README feature list** whenever a feature is added, changed, or removed.
 
 ## Mobile performance first
