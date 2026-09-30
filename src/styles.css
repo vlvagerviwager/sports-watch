@@ -178,10 +178,10 @@ input {
 }
 
 .card-toggle {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   width: 100%;
   background: none;
   border: none;
@@ -196,9 +196,12 @@ input {
 }
 
 .chevron {
-  flex: 0 0 auto;
+  position: absolute;
+  right: 0;
+  top: 50%;
   width: 14px;
   height: 14px;
+  transform: translateY(-50%);
   transition: transform 0.2s ease;
 }
 
@@ -211,7 +214,7 @@ input {
 }
 
 .chevron.is-open {
-  transform: rotate(180deg);
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .presets-panel {
