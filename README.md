@@ -20,10 +20,11 @@ bun run build
 bun run preview
 ```
 
-Type checking:
+Type checking and tests:
 
 ```bash
 bun run typecheck
+bun test
 ```
 
 ## Features
@@ -33,9 +34,10 @@ bun run typecheck
 - Configurable number of rounds (1 to 99)
 - Auto cycling session: workout, break, workout, and so on, ending after the final round
 - Pause, resume, skip phase, and stop controls during a session
-- Phase alerts: sound (Web Audio API), vibration, and a full screen color flash (green for work, amber for break, pink for the finish)
+- Phase alerts: sound (Web Audio API), vibration, and a full screen color flash (red for work, gold for break, pink for the finish)
 - Round progress dots, phase progress bar, and a hint of what comes next
 - Save the current setup as a preset, load a preset with one tap, delete presets you no longer need
+- The presets panel collapses to save space, and the loaded preset stays highlighted until you edit the timer
 - Presets persist in localStorage, no account required
 - Wake Lock keeps the screen on while a session is running (where supported)
 - Timestamp based countdown, so a throttled background tab still lands on the right phase
@@ -67,7 +69,7 @@ bun test
 
 ## Deploy to GitHub Pages
 
-The repo includes a GitHub Actions workflow at `.github/workflows/deploy.yml` that builds and publishes to GitHub Pages on every push to `main`.
+The repo includes a GitHub Actions workflow at `.github/workflows/deploy.yml` that typechecks, runs the tests, builds, and publishes to GitHub Pages on every push to `main`.
 
 ## Credits
 
