@@ -16,7 +16,7 @@ export function SessionView({ timer, onStop }: SessionViewProps) {
       <main className="session session-finished">
         <div className="session-center">
           <LuchadorMask className="finished-mask" size={76} />
-          <div className="phase-banner" data-phase="end">
+          <div className="phase-banner" data-phase="end" aria-live="polite">
             <span className="phase-banner-inner">Done</span>
           </div>
           <h2 className="finished-title">Session complete</h2>
@@ -57,7 +57,7 @@ export function SessionView({ timer, onStop }: SessionViewProps) {
   return (
     <main className="session" data-phase={phase} data-paused={paused}>
       <div className="session-top">
-        <div className="round-line">
+        <div className="round-line" aria-live="polite">
           <span className="round-text">
             Round {round} / {config.rounds}
           </span>
@@ -74,7 +74,7 @@ export function SessionView({ timer, onStop }: SessionViewProps) {
           </div>
         </div>
 
-        <div className="phase-banner" data-phase={phase}>
+        <div className="phase-banner" data-phase={phase} aria-live="polite">
           <span className="phase-banner-inner">{phase === "work" ? "Work" : "Break"}</span>
         </div>
 
