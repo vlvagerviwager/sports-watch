@@ -27,7 +27,9 @@ function Harness({ initialPresets = [] }: HarnessProps) {
           ...list,
         ]);
       }}
-      onDeletePreset={(id) => setPresets((list) => list.filter((p) => p.id !== id))}
+      onDeletePreset={(id) =>
+        setPresets((currentPresets) => currentPresets.filter((preset) => preset.id !== id))
+      }
       onStart={() => {}}
     />
   );

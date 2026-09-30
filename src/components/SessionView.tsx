@@ -7,6 +7,8 @@ interface SessionViewProps {
   onStop: () => void;
 }
 
+const MAX_ROUNDS_WITH_DOTS = 24;
+
 export function SessionView({ timer, onStop }: SessionViewProps) {
   const { snapshot } = timer;
   const { status, phase, round, remainingMs, totalMs, config } = snapshot;
@@ -52,7 +54,10 @@ export function SessionView({ timer, onStop }: SessionViewProps) {
       : `Next: ${formatDuration(config.workoutSeconds)} workout`;
 
   const paused = status === "paused";
-  const dots = config.rounds <= 24 ? Array.from({ length: config.rounds }, (_, i) => i + 1) : [];
+  const dots =
+    config.rounds <= MAX_ROUNDS_WITH_DOTS
+      ? Array.from({ length: config.rounds }, (_unused, zeroBasedIndex) => zeroBasedIndex + 1)
+      : [];
 
   return (
     <main className="session" data-phase={phase} data-paused={paused}>
@@ -62,12 +67,16 @@ export function SessionView({ timer, onStop }: SessionViewProps) {
             Round {round} / {config.rounds}
           </span>
           <div className="round-dots" aria-hidden="true">
-            {dots.map((n) => (
+            {dots.map((roundNumber) => (
               <span
-                key={n}
+                key={roundNumber}
                 className={
                   "round-dot" +
-                  (n < round ? " is-done" : n === round ? " is-active" : "")
+                  (roundNumber < round
+                    ? " is-done"
+                    : roundNumber === round
+                      ? " is-active"
+                      : "")
                 }
               />
             ))}

@@ -10,8 +10,8 @@ interface TimeInputProps {
 type Draft = [string, string, string];
 
 function draftFromSeconds(seconds: number): Draft {
-  const [h, m, s] = partsFromSeconds(seconds);
-  return [String(h), String(m), String(s)];
+  const [hours, minutes, remainingSeconds] = partsFromSeconds(seconds);
+  return [String(hours), String(minutes), String(remainingSeconds)];
 }
 
 function parsePart(raw: string): number {
@@ -56,7 +56,7 @@ export function TimeInput({ label, seconds, onChange }: TimeInputProps) {
     <div className="field">
       <span className="field-label">{label}</span>
       <div className="time-group">
-        {parts.map(({ index, unit }, i) => (
+        {parts.map(({ index, unit }, partIndex) => (
           <div className="time-part" key={unit}>
             <input
               className="time-input"
@@ -65,11 +65,11 @@ export function TimeInput({ label, seconds, onChange }: TimeInputProps) {
               pattern="[0-9]*"
               aria-label={`${label} in ${unit === "h" ? "hours" : unit === "m" ? "minutes" : "seconds"}`}
               value={draft[index]}
-              onChange={(e) => update(index, e.target.value)}
+              onChange={(event) => update(index, event.target.value)}
               onBlur={() => setDraft(draftFromSeconds(draftToSeconds(draftRef.current)))}
             />
             <span className="time-unit">{unit}</span>
-            {i < parts.length - 1 && (
+            {partIndex < parts.length - 1 && (
               <span className="time-sep" aria-hidden="true">
                 :
               </span>

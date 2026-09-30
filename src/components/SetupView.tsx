@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Preset, TimerConfig } from "../types";
 import { clampInt, formatDuration, sessionTotalSeconds } from "../lib/time";
+import { MAX_PRESET_NAME_LENGTH } from "../hooks/usePresets";
 import { TimeInput } from "./TimeInput";
 import { PresetList } from "./PresetList";
 
@@ -42,7 +43,7 @@ export function SetupView({
 
   useEffect(() => {
     if (selectedPresetId === null) return;
-    const preset = presets.find((p) => p.id === selectedPresetId);
+    const preset = presets.find((candidate) => candidate.id === selectedPresetId);
     if (!preset || !configsEqual(preset.config, config)) {
       setSelectedPresetId(null);
     }
@@ -131,11 +132,11 @@ export function SetupView({
               className="text-input"
               type="text"
               placeholder="Preset name"
-              maxLength={40}
+              maxLength={MAX_PRESET_NAME_LENGTH}
               value={presetName}
-              onChange={(e) => setPresetName(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") save();
+              onChange={(event) => setPresetName(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") save();
               }}
               aria-label="Preset name"
             />
@@ -188,8 +189,8 @@ export function SetupView({
               pattern="[0-9]*"
               aria-label="Number of rounds"
               value={roundsDraft}
-              onChange={(e) => {
-                const digits = e.target.value.replace(/[^0-9]/g, "").slice(0, 2);
+              onChange={(event) => {
+                const digits = event.target.value.replace(/[^0-9]/g, "").slice(0, 2);
                 setRoundsDraft(digits);
                 if (digits !== "") {
                   patch({ rounds: clampInt(Number(digits), 1, 99) });

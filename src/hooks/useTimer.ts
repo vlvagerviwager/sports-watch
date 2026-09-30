@@ -45,6 +45,9 @@ const DEFAULT_CONFIG: TimerConfig = {
   rounds: 5,
 };
 
+const MAX_ADVANCE_STEPS = 10000;
+const PROGRESS_BUCKETS = 200;
+
 export function createEngine(config: TimerConfig): Engine {
   const totalMs = config.workoutSeconds * 1000;
   return {
@@ -65,7 +68,7 @@ function durationOf(engine: Engine, phase: Phase): number {
 
 export function advance(engine: Engine, now: number, out: FlashKind[]): void {
   let guard = 0;
-  while (engine.deadline !== null && now >= engine.deadline && guard < 10000) {
+  while (engine.deadline !== null && now >= engine.deadline && guard < MAX_ADVANCE_STEPS) {
     guard += 1;
     if (engine.phase === "work") {
       if (engine.round >= engine.config.rounds) {
@@ -96,7 +99,10 @@ function displaySignature(engine: Engine, now: number): string {
     engine.deadline !== null ? Math.max(0, engine.deadline - now) : engine.remainingMs;
   const bucket =
     engine.totalMs > 0
-      ? Math.min(200, Math.max(0, Math.round((1 - remaining / engine.totalMs) * 200)))
+      ? Math.min(
+          PROGRESS_BUCKETS,
+          Math.max(0, Math.round((1 - remaining / engine.totalMs) * PROGRESS_BUCKETS)),
+        )
       : 0;
   return `${engine.status}|${engine.phase}|${engine.round}|${Math.ceil(remaining / 1000)}|${bucket}`;
 }
@@ -109,7 +115,7 @@ export function useTimer(): TimerApi {
   const [flash, setFlash] = useState<Flash | null>(null);
 
   const render = useCallback(() => {
-    setVersion((v) => v + 1);
+    setVersion((currentVersion) => currentVersion + 1);
   }, []);
 
   const signatureRef = useRef("");

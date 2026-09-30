@@ -3,6 +3,9 @@ import type { Preset, TimerConfig } from "../types";
 
 const STORAGE_KEY = "sports-watch/presets/v1";
 
+export const MAX_PRESET_NAME_LENGTH = 40;
+export const MAX_PRESETS = 30;
+
 function isValidPreset(value: unknown): value is Preset {
   if (typeof value !== "object" || value === null) return false;
   const candidate = value as Partial<Preset>;
@@ -47,7 +50,7 @@ export function usePresets(): PresetsApi {
   const [presets, setPresets] = useState<Preset[]>(readPresets);
 
   const savePreset = useCallback((name: string, config: TimerConfig) => {
-    const trimmed = name.trim().slice(0, 40);
+    const trimmed = name.trim().slice(0, MAX_PRESET_NAME_LENGTH);
     if (trimmed === "") return;
     const preset: Preset = {
       id:
@@ -59,7 +62,7 @@ export function usePresets(): PresetsApi {
       createdAt: Date.now(),
     };
     setPresets((prev) => {
-      const next = [preset, ...prev].slice(0, 30);
+      const next = [preset, ...prev].slice(0, MAX_PRESETS);
       writePresets(next);
       return next;
     });

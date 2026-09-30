@@ -19,7 +19,7 @@ export function secondsFromParts(hours: number, minutes: number, seconds: number
 
 export function formatClock(totalSeconds: number): string {
   const [hours, minutes, seconds] = partsFromSeconds(totalSeconds);
-  const pad = (n: number) => String(n).padStart(2, "0");
+  const pad = (value: number) => String(value).padStart(2, "0");
   if (hours > 0) return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   return `${pad(minutes)}:${pad(seconds)}`;
 }
