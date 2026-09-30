@@ -1,5 +1,5 @@
 import type { TimerApi } from "../hooks/useTimer";
-import { formatClock, formatDuration } from "../lib/time";
+import { formatClock, formatDuration, sessionTotalSeconds } from "../lib/time";
 import { LuchadorMask } from "./LuchadorMask";
 
 interface SessionViewProps {
@@ -25,11 +25,7 @@ export function SessionView({ timer, onStop }: SessionViewProps) {
           <p className="finished-stats">
             {config.rounds} rounds
             <br />
-            {formatDuration(
-              config.workoutSeconds * config.rounds +
-                config.breakSeconds * Math.max(0, config.rounds - 1),
-            )}{" "}
-            of work and breaks
+            {formatDuration(sessionTotalSeconds(config))} of work and breaks
           </p>
         </div>
         <div className="controls">
